@@ -119,4 +119,4 @@ async def skip(ctx):
 	else:
 		await ctx.send("manich mconecti")
 
-client.run("NzQxMzk1MjY2Nzc4OTU1ODY2.Xy28Jg.on9XVlHdVEaRyRY08PIzKmT_NRU")
+client.run("NzQxMzk1MjY2Nzc4OTU1ODY2.Xy28Jg.on9XVlHdVEaRyRY08PIzKmT_NRU") #old_token
