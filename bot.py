@@ -78,7 +78,7 @@ async def hello(ctx, *args):
 
 
 @client.command(name='play', help='This command makes the bot join the voice channel')
-async def play(ctx, url):
+async def play(ctx, url=""):
 	if not ctx.message.author.voice:
 		await ctx.send("connect to a voice channle oumbe3d sahel")
 		return
@@ -88,15 +88,31 @@ async def play(ctx, url):
 
 	if not ctx.message.guild.voice_client:
 		await channel.connect()
-	else:
+
 
 		server = ctx.message.guild
 		voice_channle = server.voice_client
+		if url == "":
+			return
+		else:
+			async with ctx.typing():
+				player = await YTDLSource.from_url(url, loop=client.loop)
+				voice_channle.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+				await ctx.send(f'**Now playing:** {player.title}')
+	else:
+		
+		server = ctx.message.guild
+		voice_channle = server.voice_client
+		if url == "":
+			return
+		else:
+			async with ctx.typing():
+				player = await YTDLSource.from_url(url, loop=client.loop)
+				voice_channle.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+				await ctx.send(f'**Now playing:** {player.title}')
 
-		async with ctx.typing():
-			player = await YTDLSource.from_url(url, loop=client.loop)
-			voice_channle.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-			await ctx.send(f'**Now playing:** {player.title}')
+
+
 
 
 @client.command(name="stop", help="used to stops the song and kicks the bot out of the voice channle")
@@ -114,9 +130,11 @@ async def skip(ctx):
 	if ctx.message.guild.voice_client:
 		server = ctx.message.guild
 		voice_channel = server.voice_client
+		await ctx.send("Skipped :rage:")
 
 		voice_channel.stop()
 	else:
 		await ctx.send("manich mconecti")
+
 
 client.run("token here")
