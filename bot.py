@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands, tasks
 import youtube_dl
 from random import choice
+import requests 
+
 
 
 youtube_dl.utils.bug_reports_message = lambda: ""
@@ -56,6 +58,7 @@ async def on_ready():
 	print("Djak 7afid")
 
 
+
 status = ["with little kids", "chila", "lala manich nel3eb"]
 
 
@@ -77,8 +80,9 @@ async def hello(ctx, *args):
 	await ctx.send("Ouii papiii " + " ".join(args))
 
 
-@client.command(name='play', help='This command makes the bot join the voice channel')
-async def play(ctx, url=""):
+@client.command(name='play', help='This command makes the bot join the voice channel',aliases=["p","pl","pla"])
+async def play(ctx, *args):
+	url = "".join(args)
 	if not ctx.message.author.voice:
 		await ctx.send("connect to a voice channle oumbe3d sahel")
 		return
@@ -125,7 +129,7 @@ async def stop(ctx):
 		await ctx.send("manich mconecti")
 
 
-@client.command(name='skip', help='This command stops the song!')
+@client.command(name='skip', help='This command stops the song!',aliases=["s","sk","ski"])
 async def skip(ctx):
 	if ctx.message.guild.voice_client:
 		server = ctx.message.guild
@@ -135,6 +139,14 @@ async def skip(ctx):
 		voice_channel.stop()
 	else:
 		await ctx.send("manich mconecti")
+
+@client.command(name="meme", help="sends a random meme", aliases=["mm","maym","miim","mémé","م"])
+async def meme(ctx):
+	r = requests.get("https://meme-api.herokuapp.com/gimme/1")
+
+	responce = r.json()
+
+	await ctx.send(responce['memes'][0]['url'])
 
 
 client.run("token here")
