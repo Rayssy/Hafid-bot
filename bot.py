@@ -3,8 +3,7 @@ from discord.ext import commands, tasks
 import youtube_dl
 from random import choice
 import requests 
-
-
+from math import *
 
 youtube_dl.utils.bug_reports_message = lambda: ""
 
@@ -72,12 +71,21 @@ async def ping(ctx):
 
 @client.command(name="die", help="give the bot a death sentence")
 async def die(ctx):
-	responces=["why have you brought my short life to an end","I have a famillia, kill them instead","yes please!","no lol","no u","kima 9alek ice cube, niggas whith attitude"]
+	responces=["why have you brought my short life to an end","I have a famillia, kill them instead","yes please!","no lol","no u","kima 9alek ice cube, niggas whith attitude","Sex69"]
 	await ctx.send(choice(responces))
 
 @client.command(name="hello", help="wiiii 7bibiiii")
 async def hello(ctx, *args):
 	await ctx.send("Ouii papiii " + " ".join(args))
+
+
+@client.command(name="babak", help="wechbih?",aliases=["bbk","bk","b"])
+async def babak(ctx, *args):
+	if args == ():
+		await ctx.send("Wechbih?")
+	else:
+		await ctx.send("No! Babak nta li "+" ".join(args))
+
 
 
 @client.command(name='play', help='This command makes the bot join the voice channel',aliases=["p","pl","pla"])
@@ -149,4 +157,22 @@ async def meme(ctx):
 	await ctx.send(responce['memes'][0]['url'])
 
 
-client.run("token here")
+@client.command(name="calc",help="claculator made by the legandary calculator creator", aliases=["clc","claculator","calcuate","c"])
+async def calc(ctx, *args):
+
+	eq = "".join(args)
+	reply=["9ader ro7ek!","Dsara hadi","le3b djaye7","drari","exit your mom","No"]
+
+	if "exit" in eq or "eval" in eq :
+		await ctx.send(choice(reply))
+	else:
+		try:
+			eval(eq if '__' not in eq else 'None',{'__builtins__':None})
+		except ZeroDivisionError:
+			await ctx.send("can't devede by 0 dumb ass")
+		except :
+			await ctx.send("check what you wrote dumb ass")
+		else:
+			await ctx.send(eq + " = " + str(eval(eq if '__' not in eq else 'None',{'__builtins__':None})))
+
+client.run("Token here")
